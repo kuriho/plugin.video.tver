@@ -27,7 +27,7 @@ def fetch_api_token():
                 'Origin': 'https://s.tver.jp',
                 'Referer': 'https://s.tver.jp/',
                 'Content-Type': 'application/x-www-form-urlencoded',
-            })
+            }, timeout=10)
     
     json_token = resp.json()
 
@@ -43,7 +43,7 @@ def fetch_episodes(category):
         return cached_episodes
     
     (uid, token) = fetch_api_token()
-    resp = requests.get(URL_LIST_EPISODES.format(category, uid, token), headers={'x-tver-platform-type': 'web'})
+    resp = requests.get(URL_LIST_EPISODES.format(category, uid, token), headers={'x-tver-platform-type': 'web'}, timeout=10)
     data = resp.json()
 
     cache.insert(category, data)

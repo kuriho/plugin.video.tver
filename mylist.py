@@ -151,12 +151,7 @@ class MyList:
         conn = sql.connect(self.file)
         cur = conn.cursor()
 
-        stmt = '''
-        SELECT id,
-               vid_type
-            FROM mylist
-            ORDER BY RANDOM() LIMIT 1
-        '''
+        stmt = f'SELECT id, vid_type FROM mylist ORDER BY RANDOM() LIMIT 1'
         cur.execute(stmt)
 
         results = cur.fetchall()

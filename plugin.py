@@ -86,8 +86,8 @@ def list_categories():
     xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_NONE)
     xbmcplugin.endOfDirectory(_HANDLE)
 
-def play_video(path):
-    info = extract_info(path)
+def play_video(video):
+    info = extract_info(video)
     url = extract_manifest_url_from_info(info)
 
     adaptive_type = False
