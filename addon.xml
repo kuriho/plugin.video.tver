@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<addon id="plugin.video.tver" name="TVer" version="0.1.9" provider-name="kuriho">
+  
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.inputstreamhelper" version="0.6.0" />
+    <import addon="script.module.requests" version="2.27.1" />
+  </requires>
+
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+      <provides>video</provides>
+  </extension>
+
+  <extension point="xbmc.service" library="service.py" />
+
+  <extension point="xbmc.addon.metadata">
+        <license>Unlicense</license>
+        <platform>all</platform>
+        <source>https://github.com/kuriho/</source>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+        <summary lang="ja_JP">TVer Addon</summary>
+        <description lang="ja_JP">TVer.jp + yt-dlp = ♥</description>
+    </extension>
+</addon>
