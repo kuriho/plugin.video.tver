@@ -40,12 +40,11 @@ def log(msg, level=xbmc.LOGINFO):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level)
 
-def showInfoNotification(message):
-    xbmcgui.Dialog().notification("TVer", message, xbmcgui.NOTIFICATION_INFO, 5000)
+def show_info(message):
+    xbmcgui.Dialog().notification(localize(30000), message, xbmcgui.NOTIFICATION_INFO, 5000)
 
-
-def showErrorNotification(message):
-    xbmcgui.Dialog().notification("TVer", message, xbmcgui.NOTIFICATION_ERROR, 5000)
+def show_error(message):
+    xbmcgui.Dialog().notification(localize(30000), message, xbmcgui.NOTIFICATION_ERROR, 5000)
 
 def get_random_ua():
     return user_agents[randint(0, len(user_agents) - 1)]
@@ -140,3 +139,6 @@ def find_episode(full_cache, episode_id):
 
 def refresh():
     xbmc.executebuiltin("Container.Refresh")
+
+def localize(string_id):
+    return xbmcaddon.Addon().getLocalizedString(string_id)

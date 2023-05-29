@@ -7,7 +7,7 @@ import tver
 
 from mylist import MyList
 from watcher import Watcher
-from utils import log, showInfoNotification, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url
+from utils import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize
 
 _HANDLE = int(sys.argv[1])
 
@@ -16,11 +16,11 @@ def list_videos(category):
     xbmcplugin.setContent(_HANDLE, 'videos')
 
     videos = []
-    context = ('マイリストに追加','mylist')
+    context = (localize(30021),'mylist')
 
     if category == 'mylist':
         videos = MyList().get()
-        context = ('マイリストから削除','delist')
+        context = (localize(30020),'delist')
     elif category == 'watching':
         videos = tver.get_watching_episodes()
     else:
@@ -54,11 +54,11 @@ def get_categories():
     cats = tver.get_categories()
 
     if Watcher().is_watching():
-        cats.insert(0,("watching", "視聴中", None))
+        cats.insert(0,("watching", localize(30003), None))
 
     mylist_pic = MyList().get_random_pic()
     if mylist_pic:
-        cats.insert(0,("mylist", "マイリスト", mylist_pic))
+        cats.insert(0,("mylist", localize(30002), mylist_pic))
 
     return cats
 
@@ -96,9 +96,9 @@ def play_video(video):
         adaptive_type = get_adaptive_type_from_url(url)
 
     if not url or not check_if_kodi_supports_manifest(adaptive_type):
-        err_msg = "Error: YT-DLP was not able to extract stream."
+        err_msg = localize(33000)
         log(err_msg)
-        showInfoNotification(err_msg)
+        show_info(err_msg)
         raise Exception(err_msg)
 
     list_item = xbmcgui.ListItem(info['title'], path=url)

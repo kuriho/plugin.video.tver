@@ -128,7 +128,7 @@ class MyList:
     def get(self):
         self.delete_expired()
         mylist = self.select()
-        #todo: add settings
+
         watched = [str(dict(parse_qsl(entry))['video']).split('/')[-1] for entry in Watcher().select_watched_from_list([get_url(action='play', video=URL_VIDEO_WEBSITE.format(item[1], item[0])) for item in mylist])]
 
         episodes = []

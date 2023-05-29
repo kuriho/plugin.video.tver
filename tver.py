@@ -1,7 +1,7 @@
 import requests
 from cache import Cache
 from watcher import Watcher
-from utils import get_random_ua, strip_or_none, get_custom_img_path, find_episode
+from utils import get_random_ua, strip_or_none, get_custom_img_path, find_episode, localize
 from urllib.parse import parse_qsl
 
 URL_TOKEN_SERVICE = 'https://platform-api.tver.jp/v2/api/platform_users/browser/create'
@@ -11,11 +11,11 @@ URL_VIDEO_WEBSITE = 'https://tver.jp/{}s/{}'
 URL_VIDEO_PICTURE = 'https://statics.tver.jp/images/content/thumbnail/{}/small/{}.jpg'
 
 CATEGORIES = [
-        ("variety","バラエティ", get_custom_img_path("variety.jpg")),
-        ("drama","ドラマ", get_custom_img_path("drama.jpg")),
-        ("anime","アニメ", get_custom_img_path("anime.jpg")),
-        ("documentary","ドキュメンタリー", get_custom_img_path("documentary.jpg")),
-        ("sports","スポーツ", get_custom_img_path("sports.jpg")),
+        ("variety",localize(30005), get_custom_img_path("variety.jpg")),
+        ("drama",localize(30006), get_custom_img_path("drama.jpg")),
+        ("anime",localize(30007), get_custom_img_path("anime.jpg")),
+        ("documentary",localize(30008), get_custom_img_path("documentary.jpg")),
+        ("sports",localize(30009), get_custom_img_path("sports.jpg")),
     ]
 
 def get_categories():

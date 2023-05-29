@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addon id="plugin.video.tver" name="TVer" version="0.2.0" provider-name="kuriho">
+<addon id="plugin.video.tver" name="TVer" version="0.2.1" provider-name="kuriho">
   
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
@@ -20,7 +20,7 @@
         <assets>
             <icon>icon.png</icon>
         </assets>
-        <summary lang="ja_JP">TVer Addon</summary>
-        <description lang="ja_JP">TVer.jp + yt-dlp = ♥</description>
+        <summary lang="en">TVer Addon</summary>
+        <description lang="en">TVer.jp + yt-dlp = ♥</description>
     </extension>
 </addon>

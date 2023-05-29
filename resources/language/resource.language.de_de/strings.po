@@ -1,0 +1,83 @@
+# Addon Name: TVer
+# Addon id: plugin.video.tver
+# Addon Provider: kuriho
+msgid ""
+msgstr ""
+"Project-Id-Version: plugin.video.tver\n"
+"Report-Msgid-Bugs-To: https://github.com/kuriho/plugin.video.tver/issues\n"
+"POT-Creation-Date: 2023-05-29 10:48+0000\n"
+"PO-Revision-Date: 2023-05-29 10:48+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: kuriho\n"
+
+# folders
+msgctxt "#30000"
+msgid "TVer"
+msgstr "TVer"
+
+msgctxt "#30002"
+msgid "My list"
+msgstr "Meine Liste"
+
+msgctxt "#30003"
+msgid "Continue watching"
+msgstr "Weitersehen"
+
+msgctxt "#30005"
+msgid "Variety"
+msgstr "Varieté"
+
+msgctxt "#30006"
+msgid "Drama"
+msgstr "Serie"
+
+msgctxt "#30007"
+msgid "Anime"
+msgstr "Anime"
+
+msgctxt "#30008"
+msgid "Documentary"
+msgstr "Dokumentarfilm"
+
+msgctxt "#30009"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30010"
+msgid "Others"
+msgstr "Andere"
+
+# context menus
+msgctxt "#30020"
+msgid "Remove from 'My list'"
+msgstr "Von 'Meine Liste' entfernen"
+
+msgctxt "#30021"
+msgid "Add to 'My list'"
+msgstr "Zu 'Meine Liste' hinzufügen"
+
+# settings
+msgctxt "#30050"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "#30051"
+msgid "Clear thumbnail cache"
+msgstr "Vorschaubilder Cache leeren"
+
+msgctxt "#30052"
+msgid "Clear TVer cache"
+msgstr "TVer Cache leeren"
+
+msgctxt "#30071"
+msgid "Remove"
+msgstr "Entfernen"
+
+# messages
+msgctxt "#33000"
+msgid "failed to extract stream"
+msgstr "Stream konnte nicht extrahiert werden"
