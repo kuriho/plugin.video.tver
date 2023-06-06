@@ -53,7 +53,7 @@ class Watcher:
     def get_watching_episodes(self):
         episodes = []
 
-        watching = Watcher().select()
+        watching = self.select()
 
         if watching:
             caches = Cache().get_all()
