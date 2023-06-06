@@ -9,6 +9,7 @@ URL_TAG_SEARCH_WS = 'https://platform-api.tver.jp/service/api/v1/callTagSearch/{
 URL_LIST_EPISODES =  URL_TAG_SEARCH_WS + '?platform_uid={}&platform_token={}'
 URL_VIDEO_WEBSITE = 'https://tver.jp/{}s/{}'
 URL_VIDEO_PICTURE = 'https://statics.tver.jp/images/content/thumbnail/{}/small/{}.jpg'
+URL_VIDEO_CONTENT = 'https://statics.tver.jp/content/{}/{}.json'
 
 CATEGORIES = [
         ("variety",localize(30005), get_custom_img_path("variety.jpg")),
@@ -60,12 +61,14 @@ def get_episodes(category):
         if video_type == 'episode':
             series_id = episode['content']['seriesID']
             video_id = episode['content']['id']
-            label = ' '.join(filter(None, [strip_or_none(episode['content']['seriesTitle']), strip_or_none(episode['content']['title'])]))
+            series_title = strip_or_none(episode['content']['seriesTitle'])
+            label = ' '.join(filter(None, [series_title, strip_or_none(episode['content']['title'])]))
             episodes.append({ 'name': label,
                               'series': series_id, 
                               'thumb': URL_VIDEO_PICTURE.format(video_type, video_id),
                               'video': URL_VIDEO_WEBSITE.format(video_type, video_id), 
-                              'genre': category })
+                              'genre': category, 
+                              'series_title': series_title })
 
     return episodes
 

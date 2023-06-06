@@ -69,10 +69,6 @@ msgctxt "#30051"
 msgid "Clear thumbnail cache"
 msgstr "Vorschaubilder Cache leeren"
 
-msgctxt "#30052"
-msgid "Clear TVer cache"
-msgstr "TVer Cache leeren"
-
 msgctxt "#30071"
 msgid "Remove"
 msgstr "Entfernen"

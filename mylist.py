@@ -22,8 +22,7 @@ class MyList:
                 expires       INTEGER,
                 vid_type      TEXT,
                 title         TEXT,
-                series        TEXT,
-                series_title  TEXT
+                series        TEXT
                 );
         '''
         conn.execute(table)
@@ -32,7 +31,8 @@ class MyList:
         table = '''
         CREATE TABLE IF NOT EXISTS favourites (
                 id            TEXT  PRIMARY KEY  NOT NULL,
-                category      TEXT
+                category      TEXT,
+                title         TEXT
                 );
         '''
         conn.execute(table)
@@ -58,9 +58,9 @@ class MyList:
                     self.insert(episode['type'],episode['content'])
                     
 
-    def add(self,category,series):
+    def add(self,category,series,title):
         conn = sql.connect(self.file)
-        conn.execute(f'INSERT OR REPLACE INTO favourites (id,category) VALUES (?,?)', (series, category,),)
+        conn.execute(f'INSERT OR REPLACE INTO favourites (id,category,title) VALUES (?,?,?)', (series, category, title,),)
         conn.commit()
         conn.close()
         #rebuild mylist
@@ -80,7 +80,8 @@ class MyList:
 
         stmt = '''
         SELECT id,
-               category
+               category,
+               title
             FROM favourites
         '''
         cur.execute(stmt)
@@ -97,12 +98,13 @@ class MyList:
         cur = conn.cursor()
 
         stmt = '''
-        SELECT id,
-               vid_type,
-               title,
-               series,
-               series_title 
-            FROM mylist
+        SELECT my.id,
+               my.vid_type,
+               my.title,
+               fav.id as series,
+               fav.title as series_title 
+            FROM mylist as my 
+              INNER JOIN favourites as fav on fav.id = my.series
         '''
         cur.execute(stmt)
 
@@ -117,10 +119,10 @@ class MyList:
         conn = sql.connect(self.file)
 
         conn.execute('''
-        INSERT OR REPLACE INTO mylist (id,expires,vid_type,title,series,series_title) 
-            VALUES (?,?,?,?,?,?)
+        INSERT OR REPLACE INTO mylist (id,expires,vid_type,title,series) 
+            VALUES (?,?,?,?,?)
         ''', 
-        (content['id'], content['endAt'], type, content['title'], content['seriesID'], content['seriesTitle'],),)
+        (content['id'], content['endAt'], type, content['title'], content['seriesID'], ),)
 
         conn.commit()
         conn.close()
@@ -141,7 +143,8 @@ class MyList:
                               'series': series_id, 
                               'thumb': URL_VIDEO_PICTURE.format(video_type, video_id),
                               'video': URL_VIDEO_WEBSITE.format(video_type, video_id), 
-                              'genre': None })
+                              'genre': None,
+                              'series_title': series_title })
 
         return episodes
     

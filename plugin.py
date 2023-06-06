@@ -7,7 +7,9 @@ import tver
 
 from mylist import MyList
 from watcher import Watcher
-from utils import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize
+from cache import Cache
+from favourites import show_favourites
+from utils import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize, clear_thumbnails
 
 _HANDLE = int(sys.argv[1])
 
@@ -16,15 +18,20 @@ def list_videos(category):
     xbmcplugin.setContent(_HANDLE, 'videos')
 
     videos = []
-    context = (localize(30021),'mylist')
+    context = None
 
     if category == 'mylist':
-        videos = MyList().get()
+        mylist = MyList()
+        mylist.build()
+        videos = mylist.get()
         context = (localize(30020),'delist')
+
     elif category == 'watching':
         videos = tver.get_watching_episodes()
+
     else:
         videos = tver.get_episodes(category)
+        context = (localize(30021),'mylist')
 
     for video in videos:
         label = video['name']
@@ -40,8 +47,9 @@ def list_videos(category):
         list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
         list_item.setProperty('IsPlayable', 'true')
 
-        context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'])))
-        list_item.addContextMenuItems([context_menu_item])
+        if context:
+            context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
+            list_item.addContextMenuItems([context_menu_item])
 
         url = get_url(action='play', video=video['video'])
         is_folder = False
@@ -120,10 +128,14 @@ def router(paramstring):
         elif action == 'play':
             play_video(params['video'])
         elif action == 'mylist':
-            MyList().add(params['category'], params['series'])
+            MyList().add(params['category'], params['series'], params['series_title'])
         elif action == 'delist':
             MyList().remove(params['series'])
             refresh()
+        elif action == 'thumbnails':
+            clear_thumbnails()
+        elif action == 'favourites':
+            show_favourites()
         else:
             raise ValueError('Invalid paramstring: {}!'.format(paramstring))
     else:

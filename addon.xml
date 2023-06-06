@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addon id="plugin.video.tver" name="TVer" version="0.2.1" provider-name="kuriho">
+<addon id="plugin.video.tver" name="TVer" version="0.3.0" provider-name="kuriho">
   
   <requires>
     <import addon="xbmc.python" version="3.0.1" />

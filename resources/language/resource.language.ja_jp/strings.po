@@ -69,10 +69,6 @@ msgctxt "#30051"
 msgid "Clear thumbnail cache"
 msgstr "サムネイルキャッシュをクリア"
 
-msgctxt "#30052"
-msgid "Clear TVer cache"
-msgstr "ティーバーキャッシュをクリア"
-
 msgctxt "#30071"
 msgid "Remove"
 msgstr "削除"

@@ -5,6 +5,8 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
+import sqlite3 as sql
+
 from random import randint
 from urllib.parse import urlencode
 
@@ -66,6 +68,7 @@ def patch_strptime():
 
 def extract_info(url):
     from lib.yt_dlp import YoutubeDL
+    from lib.yt_dlp.extractor.tver import TVerIE
 
     patch_strptime()
 
@@ -74,7 +77,7 @@ def extract_info(url):
     }
 
     ydl = YoutubeDL(ydl_opts)
-    ydl.add_default_info_extractors()
+    ydl.add_info_extractor(TVerIE()) 
     info = ydl.extract_info(url, download=False)
     return info
 
@@ -142,3 +145,22 @@ def refresh():
 
 def localize(string_id):
     return xbmcaddon.Addon().getLocalizedString(string_id)
+
+def clear_thumbnails():
+    from xbmcvfs import translatePath, delete
+    texturesDb = lookup_db("Textures")
+    thumbnailsPath = translatePath("special://thumbnails/")
+
+    conn = sql.connect(texturesDb)
+    try:
+        with conn:
+            textures = conn.execute("SELECT id, cachedurl FROM texture WHERE url LIKE '%%%s%%';" % "statics.tver.jp")
+            for texture in textures:
+                conn.execute("DELETE FROM sizes WHERE idtexture LIKE '%s';" % texture[0])
+                try: 
+                    delete( thumbnailsPath + texture[1])
+                except: 
+                    pass
+            conn.execute("DELETE FROM texture WHERE url LIKE '%%%s%%';" % "statics.tver.jp")
+    except:
+        pass
