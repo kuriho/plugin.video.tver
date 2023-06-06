@@ -1,8 +1,6 @@
 import requests
-from cache import Cache
-from watcher import Watcher
-from utils import get_random_ua, strip_or_none, get_custom_img_path, find_episode, localize
-from urllib.parse import parse_qsl
+from lib import Cache
+from lib import get_random_ua, strip_or_none, get_custom_img_path, localize
 
 URL_TOKEN_SERVICE = 'https://platform-api.tver.jp/v2/api/platform_users/browser/create'
 URL_TAG_SEARCH_WS = 'https://platform-api.tver.jp/service/api/v1/callTagSearch/{}'
@@ -70,35 +68,4 @@ def get_episodes(category):
                               'genre': category, 
                               'series_title': series_title })
 
-    return episodes
-
-def get_watching_episodes():
-    episodes = []
-
-    watching = Watcher().select()
-
-    if watching:
-        full_cache = Cache().get_all()
-
-        for row in watching:
-            file = row[0]
-            params = dict(parse_qsl(file))
-            tver_url = params['video']
-            video_id = str(tver_url).split('/')[-1]
-
-            episode = find_episode(full_cache, video_id)
-            if episode:
-                label = ' '.join(filter(None, [strip_or_none(episode['seriesTitle']), strip_or_none(episode['title'])]))
-                episodes.append({ 'name': label,
-                                  'series': None, 
-                                  'thumb': URL_VIDEO_PICTURE.format('episode', video_id),
-                                  'video': tver_url, 
-                                  'genre': None })
-            else:
-                #video got pulled by tver
-                episodes.append({ 'name': video_id,
-                                  'series': None, 
-                                  'thumb': URL_VIDEO_PICTURE.format('episode', video_id),
-                                  'video': tver_url, 
-                                  'genre': None })
     return episodes

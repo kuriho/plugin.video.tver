@@ -3,13 +3,13 @@ from urllib.parse import parse_qsl
 import xbmcgui
 import xbmcplugin
 
-import tver
+from lib import tver
 
-from mylist import MyList
-from watcher import Watcher
-from cache import Cache
-from favourites import show_favourites
-from utils import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize, clear_thumbnails
+from lib import Favourites
+from lib import Watcher
+from lib import MyList
+
+from lib import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize, clear_thumbnails
 
 _HANDLE = int(sys.argv[1])
 
@@ -27,7 +27,7 @@ def list_videos(category):
         context = (localize(30020),'delist')
 
     elif category == 'watching':
-        videos = tver.get_watching_episodes()
+        videos = Watcher().get_watching_episodes()
 
     else:
         videos = tver.get_episodes(category)
@@ -135,7 +135,7 @@ def router(paramstring):
         elif action == 'thumbnails':
             clear_thumbnails()
         elif action == 'favourites':
-            show_favourites()
+            Favourites().list()
         else:
             raise ValueError('Invalid paramstring: {}!'.format(paramstring))
     else:

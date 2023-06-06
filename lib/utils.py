@@ -29,24 +29,12 @@ user_agents = [
 def get_url(**kwargs):
     return '{}?{}'.format(_URL, urlencode(kwargs))
 
-def debug(content):
-    log(content, xbmc.LOGDEBUG)
-
-
-def notice(content):
-    log(content, xbmc.LOGINFO)
-
-
 def log(msg, level=xbmc.LOGINFO):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
+    addonID = xbmcaddon.Addon().getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level)
 
 def show_info(message):
     xbmcgui.Dialog().notification(localize(30000), message, xbmcgui.NOTIFICATION_INFO, 5000)
-
-def show_error(message):
-    xbmcgui.Dialog().notification(localize(30000), message, xbmcgui.NOTIFICATION_ERROR, 5000)
 
 def get_random_ua():
     return user_agents[randint(0, len(user_agents) - 1)]
@@ -130,9 +118,9 @@ def lookup_db(db_name):
 
     return None
 
-def find_episode(full_cache, episode_id):
+def find_episode(caches, episode_id):
     episode_json = None
-    for cache in full_cache:
+    for cache in caches:
         for content in cache['json']['result']['contents']:
             content = content['content']
             if content['id'] == episode_id:

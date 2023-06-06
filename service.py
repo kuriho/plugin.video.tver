@@ -1,11 +1,10 @@
-import tver
-from cache import Cache
-from mylist import MyList
+from lib import Cache, tver, Favourites, MyList
 
 if __name__ == '__main__':
     #initialize DB
     mylist = MyList()
     Cache().create()
+    Favourites().create()
     mylist.create()
     
     # cache warming
