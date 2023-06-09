@@ -5,17 +5,6 @@ from lib.tver import URL_VIDEO_PICTURE
 from lib import database, localize
 
 class Favourites:
-    def create(self):
-        with sql.connect(database()) as conn:
-            table = '''
-            CREATE TABLE IF NOT EXISTS favourites (
-                    id            TEXT  PRIMARY KEY  NOT NULL,
-                    category      TEXT,
-                    title         TEXT
-                    );
-            '''
-            conn.execute(table)
-
     def insert(self,category,series,title):
         with sql.connect(database()) as conn:
             conn.execute(f'INSERT OR REPLACE INTO favourites (id,category,title) VALUES (?,?,?)', (series, category, title,),)

@@ -4,10 +4,7 @@ import xbmcgui
 import xbmcplugin
 
 from lib import tver
-
-from lib import Favourites
-from lib import Watcher
-from lib import MyList
+from lib import Cache, Favourites, Watcher, MyList
 
 from lib import log, show_info, check_if_kodi_supports_manifest, extract_info, extract_manifest_url_from_info, get_url, refresh, get_adaptive_type_from_url, localize, clear_thumbnails
 
@@ -30,7 +27,7 @@ def list_videos(category):
         videos = Watcher().get_watching_episodes()
 
     else:
-        videos = tver.get_episodes(category)
+        videos = Cache().get_episodes(category)
         context = (localize(30021),'mylist')
 
     for video in videos:

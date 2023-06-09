@@ -2,7 +2,8 @@ import sys
 import sqlite3 as sql
 
 from urllib.parse import parse_qsl
-from lib import Cache, lookup_db, find_episode, strip_or_none, URL_VIDEO_PICTURE
+from lib.tver import URL_VIDEO_PICTURE
+from lib import Cache, lookup_db, find_episode, strip_or_none
 
 _URL = sys.argv[0]
 _DB = lookup_db("MyVideos")

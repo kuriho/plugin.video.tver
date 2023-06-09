@@ -1,6 +1,6 @@
 import requests
-from lib import Cache
-from lib import get_random_ua, strip_or_none, get_custom_img_path, localize
+
+from lib import get_random_ua, get_custom_img_path, localize
 
 URL_TOKEN_SERVICE = 'https://platform-api.tver.jp/v2/api/platform_users/browser/create'
 URL_TAG_SEARCH_WS = 'https://platform-api.tver.jp/service/api/v1/callTagSearch/{}'
@@ -34,38 +34,9 @@ def fetch_api_token():
     token = json_token['result']['platform_token']
     return (uid,token)
 
-def fetch_episodes(category):
-    cache = Cache()
-
-    cached_episodes = cache.get(category)
-    if cached_episodes != None:
-        return cached_episodes
-    
+def fetch_episodes(category):    
     (uid, token) = fetch_api_token()
     resp = requests.get(URL_LIST_EPISODES.format(category, uid, token), headers={'x-tver-platform-type': 'web'}, timeout=10)
     data = resp.json()
 
-    cache.insert(category, data)
     return data
-
-def get_episodes(category):
-    json_episodes = fetch_episodes(category)
-
-    episodes = []
-
-    for episode in json_episodes['result']['contents']:
-        video_type = episode['type']
-        
-        if video_type == 'episode':
-            series_id = episode['content']['seriesID']
-            video_id = episode['content']['id']
-            series_title = strip_or_none(episode['content']['seriesTitle'])
-            label = ' '.join(filter(None, [series_title, strip_or_none(episode['content']['title'])]))
-            episodes.append({ 'name': label,
-                              'series': series_id, 
-                              'thumb': URL_VIDEO_PICTURE.format(video_type, video_id),
-                              'video': URL_VIDEO_WEBSITE.format(video_type, video_id), 
-                              'genre': category, 
-                              'series_title': series_title })
-
-    return episodes

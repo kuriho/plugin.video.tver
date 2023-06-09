@@ -1,4 +1,3 @@
-import sys
 import sqlite3 as sql
 
 from time import time
@@ -11,20 +10,7 @@ from urllib.parse import parse_qsl
 class MyList:
     def __init__(self):
         self.favourites = Favourites()
-
-    def create(self):
-        with sql.connect(database()) as conn:
-            table = '''
-            CREATE TABLE IF NOT EXISTS mylist (
-                    id            TEXT  PRIMARY KEY  NOT NULL,
-                    expires       INTEGER,
-                    vid_type      TEXT,
-                    title         TEXT,
-                    series        TEXT
-                    );
-            '''
-            conn.execute(table)
-
+        
     def build(self):
         mylist = [item[0] for item in self.select()]
         favourites = self.favourites.select()
