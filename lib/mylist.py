@@ -45,10 +45,7 @@ class MyList:
         watched = [str(dict(parse_qsl(entry))['video']).split('/')[-1] for entry in Watcher().select_watched_from_list([get_url(action='play', video=URL_VIDEO_WEBSITE.format(item[1], item[0])) for item in mylist])]
 
         episodes = []
-
         for (video_id, video_type, title, series_id, series_title) in mylist:
-            if video_id in watched:
-                continue
             label = ' '.join(filter(None, [strip_or_none(series_title), strip_or_none(title)]))
             episodes.append({ 'name': label,
                               'series': series_id, 

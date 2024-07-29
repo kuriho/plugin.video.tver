@@ -12,7 +12,7 @@ _HANDLE = int(sys.argv[1])
 
 def list_videos(category):
     xbmcplugin.setPluginCategory(_HANDLE, category)
-    xbmcplugin.setContent(_HANDLE, 'videos')
+    xbmcplugin.setContent(_HANDLE, 'movies')
 
     videos = []
     context = None
@@ -33,14 +33,13 @@ def list_videos(category):
     for video in videos:
         label = video['name']
 
-        list_item = xbmcgui.ListItem(label=label)
+        list_item = xbmcgui.ListItem(label=label, offscreen=True)
         
         vid_info = list_item.getVideoInfoTag()
         vid_info.setTitle(label)
         vid_info.setGenres([video['genre']])
         vid_info.setTvShowTitle(video['series'])
         vid_info.setMediaType('video')
-
         list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
         list_item.setProperty('IsPlayable', 'true')
 
@@ -52,7 +51,9 @@ def list_videos(category):
         is_folder = False
         xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
     
-    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_NONE)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_TITLE)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_DATEADDED)
     xbmcplugin.endOfDirectory(_HANDLE)
 
 def get_categories():
@@ -69,11 +70,11 @@ def get_categories():
 
 def list_categories():
     xbmcplugin.setPluginCategory(_HANDLE, '...')
-    xbmcplugin.setContent(_HANDLE, 'videos')
+    xbmcplugin.setContent(_HANDLE, 'movies')
 
     categories = get_categories()
     for (name, display, pic) in categories:
-        list_item = xbmcgui.ListItem(label=display)
+        list_item = xbmcgui.ListItem(label=display, offscreen=True)
 
         list_item.setArt({'thumb': pic,
                           'icon': pic,
