@@ -11,7 +11,7 @@ An opinionated [Kodi](https://kodi.tv) video addon for accessing [TVer.jp](https
 ## Installation
 Download the [latest release](https://github.com/kuriho/plugin.video.tver/releases) and follow the instructions provided by the official Kodi wiki [How to install from a ZIP file](https://kodi.wiki/view/Add-on_manager#How_to_install_from_a_ZIP_file)
 
-Successfully tested on [LibreElec 11.0.1](https://libreelec.tv/2023/03/24/libreelec-nexus-11-0-1/) and Windows 10/11 using [Kodi v20.1](https://kodi.tv/download/). Should be compatible with every platform and every version of Kodi supporting Python 3 (19.0+).  
+Successfully tested on [LibreElec 11.0.5](https://libreelec.tv/2024/01/14/libreelec-nexus-11-0-5/). Should be compatible with every platform and every version of Kodi supporting Python 3.9+ (19.0+). As of Kodi 21.1(Omega) the windows version still comes bundled and build with cPython 3.8. Either use [v0.3.8](https://github.com/kuriho/plugin.video.tver/releases/tag/v0.3.8) or manually bump your Kodi's Python version.
 
 ## Screenshots
 <img src="https://github.com/kuriho/plugin.video.tver/blob/master/screenshots/1.png?raw=true" alt="screenshot 1" width="400"/> <img src="https://github.com/kuriho/plugin.video.tver/blob/master/screenshots/2.png?raw=true" alt="screenshot 2" width="400"/>
