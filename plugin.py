@@ -33,7 +33,7 @@ def list_videos(category):
     for video in videos:
         label = video['name']
 
-        list_item = xbmcgui.ListItem(label=label)
+        list_item = xbmcgui.ListItem(label=label, offscreen=True)
         
         vid_info = list_item.getVideoInfoTag()
         vid_info.setTitle(label)
@@ -73,7 +73,7 @@ def list_categories():
 
     categories = get_categories()
     for (name, display, pic) in categories:
-        list_item = xbmcgui.ListItem(label=display)
+        list_item = xbmcgui.ListItem(label=display, offscreen=True)
 
         list_item.setArt({'thumb': pic,
                           'icon': pic,

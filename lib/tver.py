@@ -15,6 +15,7 @@ CATEGORIES = [
         ("anime",localize(30007), get_custom_img_path("anime.jpg")),
         ("documentary",localize(30008), get_custom_img_path("documentary.jpg")),
         ("sports",localize(30009), get_custom_img_path("sports.jpg")),
+        ("other",localize(30010), get_custom_img_path("others.jpg")),
     ]
 
 def get_categories():
