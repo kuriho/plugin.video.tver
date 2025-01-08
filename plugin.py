@@ -16,6 +16,7 @@ def list_videos(category):
 
     videos = []
     context = None
+    series_list = []
 
     if category == 'mylist':
         mylist = MyList()
@@ -31,8 +32,7 @@ def list_videos(category):
         context = (localize(30021),'mylist')
 
     for video in videos:
-        label = video['name']
-
+        label = video['series_title']
         list_item = xbmcgui.ListItem(label=label, offscreen=True)
         
         vid_info = list_item.getVideoInfoTag()
@@ -40,16 +40,67 @@ def list_videos(category):
         vid_info.setGenres([video['genre']])
         vid_info.setTvShowTitle(video['series'])
         vid_info.setMediaType('video')
-        list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
         list_item.setProperty('IsPlayable', 'true')
 
         if context:
             context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
             list_item.addContextMenuItems([context_menu_item])
 
-        url = get_url(action='play', video=video['video'])
-        is_folder = False
-        xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
+        if video['series'] not in series_list:
+            series_list.append(video['series'])
+            
+            list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
+            url = get_url(action='list_series', category=category, series=video['series'], series_title=video['series_title'])
+            is_folder = True
+            xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
+    
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_TITLE)
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_DATEADDED)
+    xbmcplugin.endOfDirectory(_HANDLE)
+
+def list_series(category, series, title):
+    xbmcplugin.setPluginCategory(_HANDLE, title)
+    xbmcplugin.setContent(_HANDLE, 'movies')
+
+    videos = []
+    context = None
+
+    if category == 'mylist':
+        mylist = MyList()
+        mylist.build()
+        videos = mylist.get()
+        context = (localize(30020),'delist')
+
+    elif category == 'watching':
+        videos = Watcher().get_watching_episodes()
+
+    else:
+        videos = Cache().get_episodes(category)
+        context = (localize(30021),'mylist')
+
+    for video in videos:
+        if series == video['series']:
+            
+            label = video['name']
+
+            list_item = xbmcgui.ListItem(label=label, offscreen=True)
+        
+            vid_info = list_item.getVideoInfoTag()
+            vid_info.setTitle(label)
+            vid_info.setGenres([video['genre']])
+            vid_info.setTvShowTitle(video['series'])
+            vid_info.setMediaType('video')
+            list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
+            list_item.setProperty('IsPlayable', 'true')
+
+            if context:
+                context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
+                list_item.addContextMenuItems([context_menu_item])
+
+            url = get_url(action='play', video=video['video'])
+            is_folder = False
+            xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
     
     xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_UNSORTED)
     xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_VIDEO_TITLE)
@@ -127,6 +178,8 @@ def router(paramstring):
             play_video(params['video'])
         elif action == 'mylist':
             MyList().add(params['category'], params['series'], params['series_title'])
+        elif action == 'list_series':
+            list_series(params['category'], params['series'], params['series_title'])
         elif action == 'delist':
             MyList().remove(params['series'])
             refresh()
