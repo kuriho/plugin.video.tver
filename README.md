@@ -11,7 +11,7 @@
 - [x] Category list grouping by TV series
 - [x] add filter method all, unwatched, watched
 
-## Sxreenshots
+## Screenshots
 <img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/sort.png?raw=true" alt="sort by title" width="400"/> <img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/grouping.png?raw=true" alt="grouping" width="400"/>
 <img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/filter.png?raw=true" alt="filter" width="400"/>
 
