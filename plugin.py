@@ -32,9 +32,12 @@ def list_videos(category):
         context = (localize(30021),'mylist')
 
     for video in videos:
-        label = video['series_title']
+        if category != 'watching':
+            label = video['series_title']
+        else :
+            label = video['name']
+
         list_item = xbmcgui.ListItem(label=label, offscreen=True)
-        
         vid_info = list_item.getVideoInfoTag()
         vid_info.setTitle(label)
         vid_info.setGenres([video['genre']])
@@ -46,7 +49,12 @@ def list_videos(category):
             context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
             list_item.addContextMenuItems([context_menu_item])
 
-        if video['series'] not in series_list:
+        if category == 'watching' :
+            url = get_url(action='play', video=video['video'])
+            is_folder = False
+            xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
+            
+        elif video['series'] not in series_list:
             series_list.append(video['series'])
             
             list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
