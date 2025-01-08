@@ -44,6 +44,7 @@ def list_videos(category):
         vid_info.setTvShowTitle(video['series'])
         vid_info.setMediaType('video')
         list_item.setProperty('IsPlayable', 'true')
+        list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
 
         if context:
             context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
@@ -57,7 +58,6 @@ def list_videos(category):
         elif video['series'] not in series_list:
             series_list.append(video['series'])
             
-            list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
             url = get_url(action='list_series', category=category, series=video['series'], series_title=video['series_title'])
             is_folder = True
             xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)

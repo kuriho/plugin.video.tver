@@ -72,7 +72,7 @@ class Watcher:
                 if episode:
                     label = ' '.join(filter(None, [strip_or_none(episode['seriesTitle']), strip_or_none(episode['title'])]))
 
-                episodes.append({ 'name': label,
+                    episodes.append({ 'name': label,
                                 'series': None, 
                                 'thumb': URL_VIDEO_PICTURE.format('episode', video_id),
                                 'video': tver_url, 
