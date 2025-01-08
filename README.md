@@ -1,3 +1,21 @@
+# plugin.video.tver modified by toskaw
+# Tver プラグイン toskaw 改造版
+
+## 改造点
+- [x] タイトルでの並べ替えを追加
+- [x] カテゴリーなどのリストを番組名でフォルダー化
+- [x] すべて、未視聴、視聴済みで絞り込み
+
+## Changes
+- [x] add sort method by title
+- [x] Category list grouping by TV series
+- [x] add filter method all, unwatched, watched
+
+## Sxreenshots
+<img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/sort.png?raw=true" alt="sort by title" width="400"/> <img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/grouping.png?raw=true" alt="grouping" width="400"/>
+<img src="https://github.com/toskaw/plugin.video.tver/blob/master/screenshots/filter.png?raw=true" alt="filter" width="400"/>
+
+
 # plugin.video.tver
 An opinionated [Kodi](https://kodi.tv) video addon for accessing [TVer.jp](https://tver.jp/) VODs
 
