@@ -64,9 +64,10 @@ def extract_info(url):
         'format': 'bestvideo*+bestaudio/best'
     }
 
-    ydl = YoutubeDL(ydl_opts)
-    ydl.add_info_extractor(TVerIE()) 
-    info = ydl.extract_info(url, download=False)
+    #ydl = YoutubeDL(ydl_opts)
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.add_info_extractor(TVerIE()) 
+        info = ydl.extract_info(url, download=False)
     return info
 
 def extract_manifest_url_from_info(result):

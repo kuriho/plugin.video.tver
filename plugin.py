@@ -17,22 +17,25 @@ def list_videos(category):
     videos = []
     context = None
     series_list = []
-
+    flatdir = False
+    
     if category == 'mylist':
         mylist = MyList()
         mylist.build()
         videos = mylist.get()
+        flatdir = True
         context = (localize(30020),'delist')
 
     elif category == 'watching':
         videos = Watcher().get_watching_episodes()
+        flatdir = True
 
     else:
         videos = Cache().get_episodes(category)
         context = (localize(30021),'mylist')
 
     for video in videos:
-        if category != 'watching':
+        if not flatdir:
             label = video['series_title']
         else :
             label = video['name']
@@ -50,7 +53,7 @@ def list_videos(category):
             context_menu_item = (context[0], 'RunPlugin({})'.format(get_url(action=context[1], series=video['series'], category=video['genre'], series_title=video['series_title'])))
             list_item.addContextMenuItems([context_menu_item])
 
-        if category == 'watching' :
+        if flatdir :
             url = get_url(action='play', video=video['video'])
             is_folder = False
             xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
@@ -166,13 +169,15 @@ def play_video(video):
         show_info(err_msg)
         raise Exception(err_msg)
 
-    list_item = xbmcgui.ListItem(info['title'], path=url)
 
+    list_item = xbmcgui.ListItem(info['title'], path=url)
     list_item.setProperty("IsPlayable","true")
     
     if adaptive_type:
+        list_item.setMimeType('application/x-mpegURL')
+        list_item.setContentLookup(False)
         list_item.setProperty('inputstream', 'inputstream.adaptive')
-        list_item.setProperty('inputstream.adaptive.manifest_type', adaptive_type)
+        #list_item.setProperty('inputstream.adaptive.manifest_type', adaptive_type)
 
     xbmcplugin.setResolvedUrl(_HANDLE, True, listitem=list_item)
 
