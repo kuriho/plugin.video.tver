@@ -211,8 +211,8 @@ class TVerIE(InfoExtractor):
         if not project_id:
             raise ExtractorError('Failed to extract project ID for streaks.jp stream info')
 
-        if not ref_id.isdigit() and not ref_id.startswith('ref:'):
-            ref_id = f'ref:{ref_id}'
+        #if not ref_id.isdigit() and not ref_id.startswith('ref:'):
+        ref_id = f'ref:{ref_id}'
 
         url = self.STREAKS_URL_TEMPLATE % (project_id, ref_id, 'aa')
         self.write_debug(f'Streaks URL: {url}')
@@ -242,7 +242,7 @@ class TVerIE(InfoExtractor):
             headers={'origin': 'https://tver.jp/', 'referer': 'https://tver.jp/'},
             note='Downloading streaks.jp m3u8 information',
         )
-
+        self.write_debug(f'formats: {formats}')
         result.update({
             'id': video_id,
             'formats': formats,
