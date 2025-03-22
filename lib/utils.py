@@ -13,17 +13,27 @@ from urllib.parse import urlencode
 _URL = sys.argv[0]
 
 user_agents = [
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
-    '(KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14'
-    ' (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A',
-    'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14'
-    ' (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) '
-    'AppleWebKit/537.36 (KHTML, like Gecko) '
-    'Chrome/55.0.2883.87 Safari/537.36'
+    # Chrome
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+
+    # Firefox
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14.5; rv:126.0) Gecko/20100101 Firefox/126.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14.4; rv:125.0) Gecko/20100101 Firefox/125.0',
+
+    # Edge
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0',
+
+    # Safari
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15'
 ]
 
 def get_url(**kwargs):
@@ -61,12 +71,13 @@ def extract_info(url):
     patch_strptime()
 
     ydl_opts = {
-        'format': 'bestvideo*+bestaudio/best'
+        'format': 'bestvideo*+bestaudio/best',
+        'geo_verification_proxy': get_proxy_url() #or None
     }
 
-    ydl = YoutubeDL(ydl_opts)
-    ydl.add_info_extractor(TVerIE()) 
-    info = ydl.extract_info(url, download=False)
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.add_info_extractor(TVerIE()) 
+        info = ydl.extract_info(url, download=False)
     return info
 
 def extract_manifest_url_from_info(result):
@@ -102,6 +113,11 @@ def strip_or_none(v, default=None):
 def get_addon_path():
     addon = xbmcaddon.Addon()
     return addon.getAddonInfo('path')
+
+def get_proxy_url():
+    addon = xbmcaddon.Addon()
+    proxy_url = addon.getSetting('proxy_url')
+    return strip_or_none(proxy_url)
 
 def get_custom_img_path(file_name):
     return os.path.join(get_addon_path(), 'resources', 'img', file_name)

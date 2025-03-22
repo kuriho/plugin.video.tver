@@ -69,6 +69,14 @@ msgctxt "#30051"
 msgid "Clear thumbnail cache"
 msgstr ""
 
+msgctxt "#30060"
+msgid "Proxy"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Proxy URL"
+msgstr ""
+
 msgctxt "#30071"
 msgid "Remove"
 msgstr ""

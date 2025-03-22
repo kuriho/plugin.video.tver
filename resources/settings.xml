@@ -6,4 +6,8 @@
     <category label="30050">
         <setting label="30051" id="thumbnails" type="action" option="close" action="RunPlugin(plugin://$ID/?action=thumbnails)"/>
     </category>
+
+    <category label="30060">
+        <setting label="30061" id="proxy_url" type="text" default=""/>
+    </category>
 </settings>
