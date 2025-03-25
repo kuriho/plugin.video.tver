@@ -1,5 +1,7 @@
 > [!IMPORTANT]
-> **17.03.2025**:<br>The `master` branch is currently **dysfunctional**.<br>If you need an immediate workaround, please use the provided pre-release [v0.4.1-生版](https://github.com/kuriho/plugin.video.tver/releases/tag/v0.4.1-%E7%94%9F%E7%89%88).
+> **25.03.2025**:<br>New release coming later today!<br>
+> **17.03.2025**:<br>~~The `master` branch is currently **dysfunctional**.~~<br>If you need an immediate workaround, please use the provided pre-release [v0.4.1-生版](https://github.com/kuriho/plugin.video.tver/releases/tag/v0.4.1-%E7%94%9F%E7%89%88).
+
 
 # plugin.video.tver
 An opinionated [Kodi](https://kodi.tv) video addon for accessing [TVer.jp](https://tver.jp/) VODs
