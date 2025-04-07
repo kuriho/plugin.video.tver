@@ -84,7 +84,10 @@ def list_categories():
         vid_info.setGenres([name])
         vid_info.setMediaType('video')
 
-        url = get_url(action='listing', category=name)
+        if name == "search":
+            url = get_url(action='search')
+        else:
+            url = get_url(action='listing', category=name)
         is_folder = True
         xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
 
@@ -116,12 +119,39 @@ def play_video(video):
 
     xbmcplugin.setResolvedUrl(_HANDLE, True, listitem=list_item)
 
+def search_videos():
+    keyword = xbmcgui.Dialog().input("Search")
+
+    xbmcplugin.setContent(_HANDLE, 'videos')
+
+    videos = tver.search_episodes(keyword)
+    for video in videos:
+        label = video['name']
+        list_item = xbmcgui.ListItem(label=label, offscreen=True)
+
+        vid_info = list_item.getVideoInfoTag()
+        vid_info.setTitle(label)
+        vid_info.setTvShowTitle(video['series'])
+        vid_info.setMediaType('video')
+
+        list_item.setArt({'thumb': video['thumb'], 'icon': video['thumb'], 'fanart': video['thumb']})
+        list_item.setProperty('IsPlayable', 'true')
+
+        url = get_url(action='play', video=video['video'])
+        is_folder = False
+        xbmcplugin.addDirectoryItem(_HANDLE, url, list_item, is_folder)
+
+    xbmcplugin.addSortMethod(_HANDLE, xbmcplugin.SORT_METHOD_NONE)
+    xbmcplugin.endOfDirectory(_HANDLE)
+
 def router(paramstring):
     params = dict(parse_qsl(paramstring))
     if params:
         action = params['action']
         if action == 'listing':
             list_videos(params['category'])
+        if action == 'search':
+            search_videos()
         elif action == 'play':
             play_video(params['video'])
         elif action == 'mylist':
