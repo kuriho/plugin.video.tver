@@ -51,6 +51,10 @@ msgctxt "#30010"
 msgid "Others"
 msgstr "Andere"
 
+msgctxt "#30011"
+msgid "Search"
+msgstr "Suchen"
+
 # context menus
 msgctxt "#30020"
 msgid "Remove from 'My list'"
